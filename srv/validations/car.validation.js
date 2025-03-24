@@ -21,6 +21,12 @@ exports.carValidation = (data) => {
             'number.max': `El año no puede ser mayor a ${new Date().getFullYear()}`,
             'any.required': 'El año es obligatorio'
         }),
+        patent: Joi.string().min(1).max(10).required().messages({
+            'string.empty': 'La Patente no puede estar vacío',
+            'string.min': 'La Patente debe tener al menos 1 carácter',
+            'string.max': 'La Patnte no puede tener más de 10 caracteres',
+            'any.required': 'La Patente es obligatoria'
+        }),
         basePrice: Joi.number().precision(2).min(0).required().messages({
             'number.base': 'El precio base debe ser un número',
             'number.min': 'El precio base no puede ser negativo',
@@ -30,6 +36,10 @@ exports.carValidation = (data) => {
         statusName: Joi.string().required().messages({
             'string.empty': 'El nombre del status no puede estar vacío',
             'any.required': 'El nombre del status es obligatorio'
+        }),
+        branchName: Joi.string().required().messages({
+            'string.empty': 'El nombre de la Concecionaria no puede estar vacío',
+            'any.required': 'El nombre de la Concesionaria es obligatoria'
         }),
        
     }).unknown(true); 

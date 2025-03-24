@@ -1,6 +1,6 @@
 const {carValidation} = require ("../validations/car.validation");
 
-exports.carValidationAdapter = (req) => {
+exports.carValidationAdapter = async (req) => {
     console.log("📌 Datos recibidos en handler:", req.data);
     
     const { error } = carValidation(req.data);
@@ -14,6 +14,17 @@ exports.carValidationAdapter = (req) => {
         
     }
     console.log("✅ Datos validados correctamente, continuando con la lógica...");
+
+    if (req.data.statusName) {
+        const status = await SELECT.one.from("masterSpace.StatusCard").where({ name: req.data.statusName });
+        if (!status) return req.reject(400, `El estado '${req.data.statusName}' no existe.`);
+        req.data.status =  { id: status.id }; 
+        return
+    }
+
+    // if (req.data.branchName) {
+    //     const branch = await SELECT.ONE
+    // }
 };
 
 
